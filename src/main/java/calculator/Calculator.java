@@ -43,12 +43,12 @@ public class Calculator {
         operatorMap.put("/", Operator.DIVISION);
     }
 
-    private void defineCalculator(){
+    private void defineCalculator() throws Exception {
         calculatorMethod = new HashMap<>();
         calculatorMethod.put(Operator.DIVISION, divide(this.firstValue, this.secondValue));
     }
 
-    public double calculate(int firstValue, int secondValue, String operator){
+    public double calculate(int firstValue, int secondValue, String operator) throws Exception {
         this.firstValue = firstValue;
         this.secondValue = secondValue;
         defineOperator();
@@ -57,7 +57,14 @@ public class Calculator {
         return calculatorMethod.get(this.operator);
     }
 
-    private double divide(int a, int b){
-        return (double) (a / b);
+    private double divide(int a, int b) throws Exception {
+        try {
+
+            return (double) (a / b);
+        }
+        catch (Exception exception){
+            throw new Exception("cant divide by zero");
+        }
+
     }
 }
