@@ -32,7 +32,7 @@ public class MyStepdefs {
 
     @When("i Divide first value by second value")
     public void iDivideFirstValueBySecondValue() {
-       this.result =  calculator.divide(value1,value2);
+       this.result =  calculator.calculate(this.value1,this.value2,this.operator);
 
     }
     @Then("i expect the result to be {double}")
