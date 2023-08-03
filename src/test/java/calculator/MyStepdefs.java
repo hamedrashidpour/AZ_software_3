@@ -42,4 +42,8 @@ public class MyStepdefs {
     }
 
 
+    @Then("i expect the result to be {string}")
+    public void iExpectTheResultToBe(String exception) {
+        Assert.assertEquals(exception, Assert.assertThrows(Exception.class, () -> calculator.calculate(this.value1, this.value2,this.operator)).getMessage());
+    }
 }
