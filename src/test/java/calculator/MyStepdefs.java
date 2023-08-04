@@ -50,6 +50,17 @@ public class MyStepdefs {
     public void iExpectTheResultToBe(String exception) {
         Assert.assertEquals(exception, divideByZeroException.getMessage());
     }
+    @Given("two input values and Multiplication operator, {int} {int} {string}")
+    public void twoInputValuesAndMultiplicationOperator(int value1, int value2, String operator) {
+        this.value1 = value1;
+        this.value2 = value2;
+        this.operator = operator;
+    }
+
+    @When("i multiply first value by second value")
+    public void iMultiplyFirstValueBySecondValue() throws Exception {
+        this.result =  calculator.calculate(this.value1,this.value2,this.operator);
+    }
 
 
 
