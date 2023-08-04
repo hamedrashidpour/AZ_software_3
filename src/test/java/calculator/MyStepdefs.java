@@ -41,5 +41,16 @@ public class MyStepdefs {
         System.out.println(this.result);
     }
 
+    @When("i Divide first value by second value that is zero")
+    public void iDivideFirstValueBySecondValueThatIsZero() {
+        this.divideByZeroException = Assert.assertThrows(Exception.class, () -> calculator.calculate(this.value1, this.value2,this.operator));
+    }
+
+    @Then("i expect the result to be {string}")
+    public void iExpectTheResultToBe(String exception) {
+        Assert.assertEquals(exception, divideByZeroException.getMessage());
+    }
+
+
 
 }
