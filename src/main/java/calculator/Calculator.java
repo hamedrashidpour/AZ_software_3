@@ -84,9 +84,16 @@ public class Calculator {
     }
 
     private double power(int firstValue, int secondValue){
-        double result = 1;
-        for (int i = 0; i < secondValue; i++) {
-            result *= firstValue;
+        double tempFirst = firstValue;
+        if (secondValue == 0)
+            return 1;
+        if (secondValue < 0){
+             tempFirst = 1.0 / firstValue;
+            secondValue *= -1;
+        }
+        double result = tempFirst;
+        for (int i = 0; i < secondValue - 1; i++) {
+            result *= tempFirst;
         }
         return result;
     }

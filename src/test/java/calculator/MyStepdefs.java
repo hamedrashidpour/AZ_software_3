@@ -34,12 +34,13 @@ public class MyStepdefs {
     public void iDivideFirstValueBySecondValue() {
        this.result =  calculator.calculate(this.value1,this.value2,this.operator);
 
-    }
+}
     @Then("i expect the result to be {double}")
     public void iExpectTheResultToBe(double result) {
-        Assert.assertEquals(result, this.result, 0);
+        Assert.assertEquals(result, this.result, 0.0001);
         System.out.println(this.result);
     }
+
 
     @When("i Divide first value by second value that is zero")
     public void iDivideFirstValueBySecondValueThatIsZero() {
@@ -72,6 +73,10 @@ public class MyStepdefs {
     public void iPowerFirstValueToSecondValue() {
         this.result =  calculator.calculate(this.value1,this.value2,this.operator);
     }
+
+
+
+
 
 
 
