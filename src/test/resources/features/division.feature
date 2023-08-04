@@ -40,6 +40,23 @@
       When i Divide first value by second value
       Then i expect the result to be "cant divide by zero"
 
+    Scenario: Division by Zero
+      Given two input values and operator, -10 0 "/"
+      When i Divide first value by second value that is zero
+      Then i expect the result to be "cant divide by zero"
+
+    Scenario Outline: Division by Zero
+      Given two input values and operator, <value1> <value2> <operator>
+      When i Divide first value by second value that is zero
+      Then i expect the result to be <exception>
+      Examples:
+        | value1 | value2 | operator | exception             |
+        | -10    | 0      | "/"      | "cant divide by zero" |
+        |  10    | 0      | "/"      | "cant divide by zero" |
+        |   0    | 0      | "/"      | "cant divide by zero" |
+
+
+
 
 
 
