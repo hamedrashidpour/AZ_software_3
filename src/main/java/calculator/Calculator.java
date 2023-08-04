@@ -2,12 +2,13 @@ package calculator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 public class Calculator {
     private enum Operator {
-        DIVISION
+        DIVISION,
+        MULTIPLICATION
     }
-
 
 
     private int firstValue;
@@ -15,11 +16,11 @@ public class Calculator {
 
     private Operator operator;
 
-    private Map<String, Operator > operatorMap;
+    private Map<String, Operator> operatorMap;
 
     private Map<Operator, Double> calculatorMethod;
 
-    public Calculator (){
+    public Calculator() {
 
     }
 
@@ -38,17 +39,21 @@ public class Calculator {
     public void setSecondValue(int secondValue) {
         this.secondValue = secondValue;
     }
-    private void defineOperator(){
+
+    private void defineOperator() {
         operatorMap = new HashMap<>();
         operatorMap.put("/", Operator.DIVISION);
+        operatorMap.put("*", Operator.MULTIPLICATION);
+
     }
 
-    private void defineCalculator(){
+    private void defineCalculator() throws Exception {
         calculatorMethod = new HashMap<>();
         calculatorMethod.put(Operator.DIVISION, divide(this.firstValue, this.secondValue));
+        calculatorMethod.put(Operator.MULTIPLICATION, multiply(this.firstValue, this.secondValue));
     }
 
-    public double calculate(int firstValue, int secondValue, String operator){
+    public double calculate(int firstValue, int secondValue, String operator) throws Exception {
         this.firstValue = firstValue;
         this.secondValue = secondValue;
         defineOperator();
@@ -67,5 +72,7 @@ public class Calculator {
         }
 
     }
-
+        private double multiply(int firstValue, int secondValue){
+        return (double) firstValue * secondValue;
+    }
 }
