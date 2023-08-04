@@ -7,7 +7,8 @@ import java.util.function.BiFunction;
 public class Calculator {
     private enum Operator {
         DIVISION,
-        MULTIPLICATION
+        MULTIPLICATION,
+        POWER
     }
 
 
@@ -44,6 +45,7 @@ public class Calculator {
         operatorMap = new HashMap<>();
         operatorMap.put("/", Operator.DIVISION);
         operatorMap.put("*", Operator.MULTIPLICATION);
+        operatorMap.put("^", Operator.POWER);
     }
 
     private void defineCalculator() throws Exception {
@@ -56,6 +58,7 @@ public class Calculator {
             }
         });
         calculatorMethod.put(Operator.MULTIPLICATION, this::multiply);
+        calculatorMethod.put(Operator.POWER, this::power);
     }
 
     public double calculate(int firstValue, int secondValue, String operator) {
@@ -78,5 +81,13 @@ public class Calculator {
 
     private double multiply(int firstValue, int secondValue){
         return (double) firstValue * secondValue;
+    }
+
+    private double power(int firstValue, int secondValue){
+        double result = 1;
+        for (int i = 0; i < secondValue; i++) {
+            result *= firstValue;
+        }
+        return result;
     }
 }
