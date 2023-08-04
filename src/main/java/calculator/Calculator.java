@@ -16,12 +16,13 @@ public class Calculator {
 
     private Operator operator;
 
-    private Map<String, Operator> operatorMap;
+    private Map<String, Operator > operatorMap;
 
-    private Map<Operator, Double> calculatorMethod;
+    private Map<Operator, BiFunction<Integer, Integer, Double>> calculatorMethod;
 
-    public Calculator() {
-
+    public Calculator () throws Exception {
+        defineOperator();
+        defineCalculator();
     }
 
     public int getFirstValue() {
@@ -39,27 +40,29 @@ public class Calculator {
     public void setSecondValue(int secondValue) {
         this.secondValue = secondValue;
     }
-
-    private void defineOperator() {
+    private void defineOperator(){
         operatorMap = new HashMap<>();
         operatorMap.put("/", Operator.DIVISION);
         operatorMap.put("*", Operator.MULTIPLICATION);
-
     }
 
     private void defineCalculator() throws Exception {
         calculatorMethod = new HashMap<>();
-        calculatorMethod.put(Operator.DIVISION, divide(this.firstValue, this.secondValue));
-        calculatorMethod.put(Operator.MULTIPLICATION, multiply(this.firstValue, this.secondValue));
+        calculatorMethod.put(Operator.DIVISION, (a, b) -> {
+            try {
+                return divide(a, b);
+            } catch (Exception e) {
+                throw new RuntimeException("cant divide by zero");
+            }
+        });
+        calculatorMethod.put(Operator.MULTIPLICATION, this::multiply);
     }
 
-    public double calculate(int firstValue, int secondValue, String operator) throws Exception {
+    public double calculate(int firstValue, int secondValue, String operator) {
         this.firstValue = firstValue;
         this.secondValue = secondValue;
-        defineOperator();
-        defineCalculator();
         this.operator = operatorMap.get(operator);
-        return calculatorMethod.get(this.operator);
+        return calculatorMethod.get(this.operator).apply(this.firstValue, this.secondValue);
     }
 
     private double divide(int a, int b) throws Exception {
@@ -72,7 +75,8 @@ public class Calculator {
         }
 
     }
-        private double multiply(int firstValue, int secondValue){
+
+    private double multiply(int firstValue, int secondValue){
         return (double) firstValue * secondValue;
     }
 }
