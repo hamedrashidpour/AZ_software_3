@@ -57,7 +57,15 @@ public class Calculator {
         return calculatorMethod.get(this.operator);
     }
 
-    private double divide(int a, int b){
-        return (double) (a / b);
+    private double divide(int a, int b) throws Exception {
+        try {
+
+            return (double) (a / b);
+        }
+        catch (Exception exception){
+            throw new Exception("cant divide by zero");
+        }
+
     }
+
 }
