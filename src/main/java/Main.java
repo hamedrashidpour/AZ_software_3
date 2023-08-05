@@ -3,7 +3,7 @@ import calculator.Calculator;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("please enter your inputs (sample: integer integer ( ^ or * or /))");
         System.out.println("enter exit to end");

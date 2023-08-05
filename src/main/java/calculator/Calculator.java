@@ -21,7 +21,7 @@ public class Calculator {
 
     private Map<Operator, BiFunction<Integer, Integer, Double>> calculatorMethod;
 
-    public Calculator () throws Exception {
+    public Calculator () {
         defineOperator();
         defineCalculator();
     }
@@ -69,14 +69,9 @@ public class Calculator {
     }
 
     private double divide(int firstValue, int secondValue) throws Exception {
-        try {
-            return (double) ((firstValue * 1.0) / secondValue);
-        }
-        catch (Exception exception){
-            throw new Exception("cant divide by zero");
-
-        }
-
+            if (secondValue == 0)
+                throw new Exception("cant divide by zero");
+            return (double) ((double) firstValue  / (double) secondValue);
     }
 
     private double multiply(int firstValue, int secondValue){
