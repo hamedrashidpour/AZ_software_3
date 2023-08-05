@@ -48,7 +48,7 @@ public class Calculator {
         operatorMap.put("^", Operator.POWER);
     }
 
-    private void defineCalculator() throws Exception {
+    private void defineCalculator() {
         calculatorMethod = new HashMap<>();
         calculatorMethod.put(Operator.DIVISION, (a, b) -> {
             try {
@@ -68,13 +68,13 @@ public class Calculator {
         return calculatorMethod.get(this.operator).apply(this.firstValue, this.secondValue);
     }
 
-    private double divide(int a, int b) throws Exception {
+    private double divide(int firstValue, int secondValue) throws Exception {
         try {
-
-            return (double) (a / b);
+            return (double) ((firstValue * 1.0) / secondValue);
         }
         catch (Exception exception){
             throw new Exception("cant divide by zero");
+
         }
 
     }
