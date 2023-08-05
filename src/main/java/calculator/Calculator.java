@@ -2,12 +2,14 @@ package calculator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 
 public class Calculator {
     private enum Operator {
-        DIVISION
+        DIVISION,
+        MULTIPLICATION,
+        POWER
     }
-
 
 
     private int firstValue;
@@ -17,10 +19,11 @@ public class Calculator {
 
     private Map<String, Operator > operatorMap;
 
-    private Map<Operator, Double> calculatorMethod;
+    private Map<Operator, BiFunction<Integer, Integer, Double>> calculatorMethod;
 
-    public Calculator (){
-
+    public Calculator () throws Exception {
+        defineOperator();
+        defineCalculator();
     }
 
     public int getFirstValue() {
@@ -41,20 +44,28 @@ public class Calculator {
     private void defineOperator(){
         operatorMap = new HashMap<>();
         operatorMap.put("/", Operator.DIVISION);
+        operatorMap.put("*", Operator.MULTIPLICATION);
+        operatorMap.put("^", Operator.POWER);
     }
 
     private void defineCalculator() throws Exception {
         calculatorMethod = new HashMap<>();
-        calculatorMethod.put(Operator.DIVISION, divide(this.firstValue, this.secondValue));
+        calculatorMethod.put(Operator.DIVISION, (a, b) -> {
+            try {
+                return divide(a, b);
+            } catch (Exception e) {
+                throw new RuntimeException("cant divide by zero");
+            }
+        });
+        calculatorMethod.put(Operator.MULTIPLICATION, this::multiply);
+        calculatorMethod.put(Operator.POWER, this::power);
     }
 
-    public double calculate(int firstValue, int secondValue, String operator) throws Exception {
+    public double calculate(int firstValue, int secondValue, String operator) {
         this.firstValue = firstValue;
         this.secondValue = secondValue;
-        defineOperator();
-        defineCalculator();
         this.operator = operatorMap.get(operator);
-        return calculatorMethod.get(this.operator);
+        return calculatorMethod.get(this.operator).apply(this.firstValue, this.secondValue);
     }
 
     private double divide(int a, int b) throws Exception {
@@ -66,5 +77,24 @@ public class Calculator {
             throw new Exception("cant divide by zero");
         }
 
+    }
+
+    private double multiply(int firstValue, int secondValue){
+        return (double) firstValue * secondValue;
+    }
+
+    private double power(int firstValue, int secondValue){
+        double tempFirst = firstValue;
+        if (secondValue == 0)
+            return 1;
+        if (secondValue < 0){
+             tempFirst = 1.0 / firstValue;
+            secondValue *= -1;
+        }
+        double result = tempFirst;
+        for (int i = 0; i < secondValue - 1; i++) {
+            result *= tempFirst;
+        }
+        return result;
     }
 }
